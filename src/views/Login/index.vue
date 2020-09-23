@@ -98,8 +98,24 @@ export default {
           message: '登录成功',
           type: 'success'
         })
+        // 关闭loading
         this.loginLoading = false
+
+        // 将接口返回的用户相关数据放到本地存储，方便应用数据共享
+        // 本地存储只能存储字符串
+        // 如果需要存储对象，数组类型的数据，则把他们转换为JSON格式字符串进行存储
+        window.localStorage.setItem('user', JSON.stringify(res.data.data))
+        // 打印请求之后的返回结果
         console.log(res)
+
+        // 跳转到首页
+        // this.$router.push('/')
+        // 方法二
+        // 路由中的name 可以实现路由跳转
+        // 组件中name 可以通过vue工具能够通过name很好的查看当前组件的内容
+        this.$router.push({
+          name: 'home'
+        })
       })
         .catch(err => { // 登录失败
           this.$message.error('登录失败，手机号或验证码错误')
